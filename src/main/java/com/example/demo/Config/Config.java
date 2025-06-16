@@ -3,15 +3,9 @@ package com.example.demo.Config;
 import java.time.Instant;
 import java.util.Arrays;
 
-import com.example.demo.Entity.CategoryEntity;
+import com.example.demo.Entity.*;
 import com.example.demo.Entity.Enum.OrderStatus;
-import com.example.demo.Entity.OrderEntity;
-import com.example.demo.Entity.ProductEntity;
-import com.example.demo.Entity.UserEntity;
-import com.example.demo.Repository.CategoryRepository;
-import com.example.demo.Repository.OrderRepository;
-import com.example.demo.Repository.ProducttRepository;
-import com.example.demo.Repository.UserRepository;
+import com.example.demo.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -35,6 +29,9 @@ public class Config {
 
         @Autowired
         private ProducttRepository producttRepository;
+
+        @Autowired
+        private OrderItemRepository orderItemRepository;
 
         @Override
         public void run(String... args) throws Exception {
@@ -67,10 +64,17 @@ public class Config {
             p4.getCategories().add(cat3);
             p5.getCategories().add(cat2);
 
-            producttRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
 
+            OrderItemEntity oi1 = new OrderItemEntity(o1, p1, 2, p1.getPrice());
+            OrderItemEntity oi2 = new OrderItemEntity(o1, p3, 1, p3.getPrice());
+            OrderItemEntity oi3 = new OrderItemEntity(o2, p3, 2, p3.getPrice());
+            OrderItemEntity oi4 = new OrderItemEntity(o3, p5, 2, p5.getPrice());
+
+            producttRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
             userRepository.saveAll(Arrays.asList(u1, u2, u3));
             orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+
+            orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
 
         }
     }

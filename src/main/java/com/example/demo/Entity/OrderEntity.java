@@ -3,10 +3,11 @@ package com.example.demo.Entity;
 import com.example.demo.Entity.Enum.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_order")
@@ -19,8 +20,12 @@ public class OrderEntity {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant moment;
 
-    @ManyToOne
+    @ManyToOne()
     private UserEntity client;
+
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderItemEntity> items = new HashSet<>();
+
     private Integer orderStatus;
 
     public OrderEntity(){}
@@ -60,6 +65,10 @@ public class OrderEntity {
         if (orderStatus != null){
             this.orderStatus = orderStatus.getCode();
         }
+    }
+
+    public Set<OrderItemEntity> getItems(){
+        return items;
     }
 
     @Override
