@@ -59,6 +59,10 @@ public class OrderItemEntity {
         this.quantity = quantity;
     }
 
+    public Double getSubTotal(){
+        return getPrice() * getQuantity();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

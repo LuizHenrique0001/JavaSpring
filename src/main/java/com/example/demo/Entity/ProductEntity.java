@@ -25,6 +25,9 @@ public class ProductEntity {
     @JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "categories_id"))
     private Set<CategoryEntity> categories = new HashSet<>();
 
+    @OneToMany(mappedBy = "id.product")
+    private Set<OrderItemEntity> items = new HashSet<>();
+
     public ProductEntity() {
     }
 

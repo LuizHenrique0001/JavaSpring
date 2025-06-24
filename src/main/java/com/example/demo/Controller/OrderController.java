@@ -6,9 +6,7 @@ import com.example.demo.Repository.OrderRepository;
 import com.example.demo.Service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,10 +22,11 @@ public class OrderController {
         return ResponseEntity.ok().body(orderService.findAll());
     }
 
-    public ResponseEntity<Optional<OrderEntity>> findById(Long id){
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<OrderEntity>> findById(@PathVariable Long id){
         return ResponseEntity.ok().body(orderService.findById(id));
     }
-
-    public void save(OrderEntity orderEntity){orderService.save(orderEntity);
+    @PostMapping
+    public void save(@RequestBody OrderEntity orderEntity){orderService.save(orderEntity);
     }
 }

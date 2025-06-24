@@ -26,6 +26,9 @@ public class OrderEntity {
     @OneToMany(mappedBy = "id.order")
     private Set<OrderItemEntity> items = new HashSet<>();
 
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    private PaymentEntity payment;
+
     private Integer orderStatus;
 
     public OrderEntity(){}
@@ -57,6 +60,14 @@ public class OrderEntity {
         return client;
     }
 
+    public PaymentEntity getPayment() {
+        return payment;
+    }
+
+    public void setPayment(PaymentEntity payment) {
+        this.payment = payment;
+    }
+
     public OrderStatus getOrderStatus() {
         return OrderStatus.velueOf(orderStatus);
     }
@@ -69,6 +80,14 @@ public class OrderEntity {
 
     public Set<OrderItemEntity> getItems(){
         return items;
+    }
+
+    public Double getTotal(){
+        Double total = 0.0;
+        for (OrderItemEntity item: getItems()){
+            total+= item.getSubTotal();
+        }
+        return total;
     }
 
     @Override
